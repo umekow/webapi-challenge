@@ -27,7 +27,7 @@ function validateProjectID(req, res, next) {
     projects.get(req.params.id)
     .then(r => {
         if(r) {
-            req.body = r; 
+            project = r; 
             next(); 
         }else{
             res.status(400).json({message : "A project with that id does not exist"}); 
@@ -55,10 +55,10 @@ server.post('/', (req, res) => {
 })
 
 //actons
-server.post('/:id/actions', (req, res) => {
+server.post('/:id/actions', validateProjectID, (req, res) => {
     actions.insert({...req.body, "project_id ": Number(req.params.id)})
     .then(r => {
-        res.status(202).json(r)
+        res.status(202).json(project)
     })
     .catch(error => res.status(400).json(error))
 })
@@ -74,9 +74,9 @@ server.get('/', (req, res) => {
 })
 
 
-server.get('/:id', (req, res) => {
+server.get('/:id', validateProjectID, (req, res) => {
     projects.get(req.params.id)
-    .then(r => res.status(200).json(r))
+    .then(r => res.status(200).json(project))
     .catch(error => res.status(400).json(error))
 })
 
@@ -94,9 +94,9 @@ server.get('/actions/:id', (req, res) => {
 })
 
 
-server.get('/:id/actions', (req, res) => {
+server.get('/:id/actions', validateProjectID, (req, res) => {
     projects.getProjectActions(req.params.id)
-    .then(r => res.status(200).json(r))
+    .then(r => res.status(200).json(project))
     .catch(error => res.status(400).json(error))
 
 })
@@ -104,9 +104,10 @@ server.get('/:id/actions', (req, res) => {
 
 //project
 
-server.put('/:id', (req, res) => {
+server.put('/:id', validateProjectID, (req, res) => {
+    
     projects.update(req.params.id, req.body)
-    .then(r => res.status(202).json(r))
+    .then(r => res.status(202).json(project))
     .catch(error => res.status(400).json(error))
 })
 
@@ -121,9 +122,9 @@ server.put('/actions/:id', (req, res) => {
 
 //projects
 
-server.delete('/:id', (req, res) => {
+server.delete('/:id', validateProjectID, (req, res) => {
     projects.remove(req.params.id)
-    .then(r => res.status(200).json(r))
+    .then(r => res.status(200).json(project))
     .catch(error => res.status(400).json(error))
 })
 
