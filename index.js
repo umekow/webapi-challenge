@@ -48,14 +48,14 @@ function validateProjectID(req, res, next) {
 
 /*********POST************/
 //projects
-server.post('/projects', (req, res) => {
+server.post('/', (req, res) => {
     projects.insert(req.body)
     .then(r => res.status(202).json(r))
     .catch(error => res.status(400).json(error))
 })
 
 //actons
-server.post('/projects/:id/actions', (req, res) => {
+server.post('/:id/actions', (req, res) => {
     actions.insert({...req.body, "project_id ": Number(req.params.id)})
     .then(r => {
         res.status(202).json(r)
@@ -93,6 +93,21 @@ server.get('/actions/:id', (req, res) => {
     .catch(error => res.status(400).json(error))
 })
 /*********PUT************/
+
+//project
+
+server.put('/:id', (req, res) => {
+    projects.update(req.params.id, req.body)
+    .then(r => res.status(202).json(r))
+    .catch(error => res.status(400).json(error))
+})
+
+//action
+server.put('/:id', (req, res) => {
+    projects.update(req.params.id, req.body)
+    .then(r => res.status(202).json(r))
+    .catch(error => res.status(400).json(error))
+})
 
 /*********DELETE************/
 
