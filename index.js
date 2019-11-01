@@ -103,8 +103,8 @@ server.put('/:id', (req, res) => {
 })
 
 //action
-server.put('/:id', (req, res) => {
-    projects.update(req.params.id, req.body)
+server.put('/actions/:id', (req, res) => {
+    actions.update(req.params.id, req.body)
     .then(r => res.status(202).json(r))
     .catch(error => res.status(400).json(error))
 })
