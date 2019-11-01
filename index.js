@@ -92,6 +92,14 @@ server.get('/actions/:id', (req, res) => {
     .then(r => res.status(200).json(r))
     .catch(error => res.status(400).json(error))
 })
+
+
+server.get('/:id/actions', (req, res) => {
+    projects.getProjectActions(req.params.id)
+    .then(r => res.status(200).json(r))
+    .catch(error => res.status(400).json(error))
+
+})
 /*********PUT************/
 
 //project
@@ -110,5 +118,29 @@ server.put('/actions/:id', (req, res) => {
 })
 
 /*********DELETE************/
+
+//projects
+
+server.delete('/:id', (req, res) => {
+    projects.remove(req.params.id)
+    .then(r => res.status(200).json(r))
+    .catch(error => res.status(400).json(error))
+})
+
+
+
+//actions
+
+server.delete('/actions/:id', (req, res) => {
+    actions.remove(req.params.id)
+    .then(
+        r => res.status(200).json(r)
+    )
+    .catch(error => res.status(400).json(error))
+})
+
+
+
+/**************************END OF REQUESTS********************/
 
 server.listen(port, () => console.log(`Wohoo! Server is running on http://localhost:${port}`));
