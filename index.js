@@ -4,10 +4,12 @@ if (process.env.NODE_ENV !== 'production') { require('dotenv').config() }
 const express = require('express');
 const helmet = require('helmet'); 
 const morgan = require('morgan'); 
+const cors = require('cors'); 
 const server = express(); 
 const projects = require('./data/helpers/projectModel'); 
 const actions = require('./data/helpers/actionModel'); 
-server.use(express.json()); 
+server.use(express.json());
+server.use(cors());
 /*server.use(helmet());
 server.use(morgan()); */
 const port = process.env.PORT || 5000; 
