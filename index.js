@@ -17,6 +17,9 @@ const port = process.env.PORT || 5000;
 
 
 
+
+
+
 /*********MIDDLEWARE************/
 
 
@@ -44,7 +47,11 @@ function validateProjectID(req, res, next) {
 /*******************************************REQUESTS*****************************/
 
 /*********POST************/
-
+server.post('/projects', (req, res) => {
+    projects.insert(req.body)
+    .then(r => res.status(202).json(r))
+    .catch(error => res.status(400).json(error))
+})
 
 /*********GET************/
 server.get('/', (req, res) => {
